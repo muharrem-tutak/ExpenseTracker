@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#153e35">
+  <title>Expense Tracker · Harcamalarım</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/"><span class="logo">₺</span>Expense Tracker</a><a class="api-link" href="/swagger">API / Swagger ↗</a></header>
+  <main>
+    <div class="heading"><div><p class="eyebrow">KİŞİSEL HARCAMA TAKİBİ</p><h1>Harcamalarım</h1><p class="subtitle">Günlük harcamalarını kaydet, bütçeni daha net gör.</p></div><span class="local-badge">Tek kullanıcı · TRY</span></div>
+    <section class="stats" aria-label="Harcama özeti">
+      <article class="stat primary"><p>Toplam harcama</p><strong id="total-amount">—</strong><span>Tüm kayıtların toplamı</span></article>
+      <article class="stat"><p>Harcama sayısı</p><strong id="total-count">—</strong><span>Kayıtlı harcama</span></article>
+      <article class="stat"><label for="summary-month">Aylık toplam</label><input id="summary-month" type="month" aria-label="Özet ayı"><strong id="monthly-total">—</strong><span id="monthly-count">Seçilen ayın harcamaları</span></article>
+    </section>
+    <p id="notice" class="notice" role="status" aria-live="polite" hidden></p>
+    <div class="workspace">
+      <section class="panel entry-panel" aria-labelledby="form-title">
+        <div class="panel-heading"><h2 id="form-title">Yeni harcama</h2><p>Harcamanın detaylarını ekle.</p></div>
+        <form id="expense-form" novalidate>
+          <label for="title">Başlık / açıklama</label><input id="title" name="title" maxlength="100" placeholder="Örn. Market alışverişi" required>
+          <label for="category">Kategori</label><input id="category" name="category" maxlength="50" list="categories" placeholder="Kategori seç veya yaz" required>
+          <datalist id="categories"><option value="Gıda"><option value="Ulaşım"><option value="Faturalar"><option value="Alışveriş"><option value="Sağlık"><option value="Eğlence"><option value="Diğer"></datalist>
+          <div class="form-row"><div><label for="amount">Tutar (₺)</label><input id="amount" name="amount" type="number" min="0.01" max="999999999999.99" step="0.01" inputmode="decimal" placeholder="0,00" required></div><div><label for="date">Tarih</label><input id="date" name="date" type="date" required></div></div>
+          <p id="form-error" class="form-error" role="alert" hidden></p>
+          <button class="button save" id="save-button" type="submit">Harcama ekle</button>
+          <button class="button secondary" id="cancel-edit" type="button" hidden>Düzenlemeyi iptal et</button>
+          <p class="form-hint">Tutarları Türk lirası olarak kaydediyoruz.</p>
+        </form>
+      </section>
+      <section class="panel list-panel" aria-labelledby="list-title">
+        <div class="list-heading"><div><h2 id="list-title">Harcama listesi</h2><p id="list-summary">Tüm kategoriler</p></div><button class="button secondary compact" id="refresh" type="button">Yenile</button></div>
+        <div class="list-controls"><div><label for="category-filter">Kategori filtresi</label><select id="category-filter"><option value="">Tüm kategoriler</option></select></div><div><label for="date-sort">Tarih sıralaması</label><select id="date-sort"><option value="desc">En yeni önce</option><option value="asc">En eski önce</option></select></div></div>
+        <div id="loading" class="empty" role="status">Harcamalar yükleniyor…</div>
+        <div id="empty-state" class="empty" hidden><span class="empty-icon">₺</span><h3>İlk harcamanı ekle</h3><p>Kaydettiğin harcamalar burada görünecek.</p></div>
+        <div id="filter-empty" class="empty" hidden><h3>Bu kategoride harcama yok</h3><p>Başka bir kategori seçebilir veya filtreyi temizleyebilirsin.</p></div>
+        <div class="table-wrap" id="table-wrap" hidden><table><thead><tr><th scope="col">Harcama</th><th scope="col">Tarih</th><th scope="col" class="money">Tutar</th><th scope="col"><span class="sr-only">İşlemler</span></th></tr></thead><tbody id="expense-list"></tbody></table></div>
+      </section>
+    </div>
+    <section class="panel chart-panel" aria-labelledby="chart-title"><div class="panel-heading"><h2 id="chart-title">Kategori dağılımı</h2><p>Seçilen ayın tüm kategorileri · Liste filtresinden bağımsız</p></div><div id="category-chart" aria-live="polite"></div><p id="chart-empty" class="subtitle" hidden>Seçilen ayda henüz harcama yok.</p></section>
+    <footer>Expense Tracker <span>ASP.NET Core · SQL Server</span></footer>
+  </main>
+  <dialog id="edit-dialog" aria-labelledby="edit-heading"><h2 id="edit-heading">Harcamayı düzenle</h2><p>Bilgileri değiştirip kaydet. Vazgeçersen kayıt aynı kalır.</p><div id="edit-form-host"></div></dialog>
+  <dialog id="delete-dialog"><h2>Harcama silinsin mi?</h2><p id="delete-description"></p><p>Bu işlem geri alınamaz.</p><p id="delete-error" class="form-error" role="alert" hidden></p><div class="dialog-actions"><button id="cancel-delete" class="button secondary" type="button">Vazgeç</button><button id="confirm-delete" class="button danger" type="button">Harcamayı sil</button></div></dialog>
+</body>
+</html>

@@ -1,0 +1,49 @@
+# Build and test outputs
+[Bb]in/
+[Oo]bj/
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# IDE and user-specific settings
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.sln.docstates
+
+# Local configuration and secrets
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
+appsettings.Production.json
+appsettings.Staging.json
+.env
+.env.*
+!.env.example
+secrets.json
+*.pfx
+*.p12
+*.key
+
+# Database, logs and temporary files
+*.mdf
+*.ldf
+*.ndf
+*.bak
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Other database files and exports
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.bacpac
+*.dacpac
+*.dump

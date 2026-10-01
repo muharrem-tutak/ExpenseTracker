@@ -1,0 +1,43 @@
+@host = http://localhost:5011
+
+GET {{host}}/api/expenses
+Accept: application/json
+
+### Oluştur
+POST {{host}}/api/expenses
+Content-Type: application/json
+
+{
+  "title": "Market alışverişi",
+  "amount": 250.50,
+  "category": "Gıda",
+  "date": "2026-10-01"
+}
+
+### ID değerini oluşturulan kaydın ID'siyle değiştirin
+GET {{host}}/api/expenses/1
+
+### Güncelle
+PUT {{host}}/api/expenses/1
+Content-Type: application/json
+
+{
+  "title": "Market alışverişi",
+  "amount": 300.00,
+  "category": "Gıda",
+  "date": "2026-10-01"
+}
+
+### Sil
+DELETE {{host}}/api/expenses/1
+
+### Hatalı veri: 400 beklenir
+POST {{host}}/api/expenses
+Content-Type: application/json
+
+{
+  "title": "",
+  "amount": -1,
+  "category": "",
+  "date": null
+}
